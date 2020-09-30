@@ -7,66 +7,71 @@ let baseDeDatos = [
   },
   {
       nombre: 'GALLETAS DE GORILA',
-      precio: 12.75,
+      precio: 11.75,
       imagen: 'multimedia/gorila-cookie-auto.jpg'
   },
   {
       nombre: 'PASTEL DE LIMON',
-      precio: 13.85,
+      precio: 12.85,
       imagen: 'multimedia/lemon-pie-auto.jpg'
   },
   {
       nombre: 'STRAWBERRY PIE',
-      precio: 16.55,
+      precio: 13.55,
       imagen: 'multimedia/strawberry-pie-auto.jpg'
   },
   {
       nombre: 'DINAMED KUSH CBD',
-      precio: 15.65,
+      precio: 14.65,
       imagen: 'multimedia/dinamed-kush-auto-cbd.jpg'
   },
   {
       nombre: 'WEDDING CHEESCAKE',
-      precio: 13.65,
+      precio: 15.65,
       imagen: 'multimedia/wedding-cheescake-auto.jpg'
   },
   {
       nombre: 'ORANGE SHERBET',
-      precio: 11.65,
+      precio: 16.65,
       imagen: 'multimedia/orange-sherbet-auto.jpg'
   },
   {
       nombre: 'FAST GREEN CRACK',
-      precio: 11.65,
+      precio: 17.65,
       imagen: 'multimedia/fast-green-crack.jpg'
   },
   {
       nombre: 'CHAMPAGEN',
-      precio: 13.65,
+      precio: 18.65,
       imagen: 'multimedia/mimosa-champagne.jpg'
   },
   {
       nombre: 'SOMANGO GLUE',
-      precio: 10.65,
+      precio: 19.65,
       imagen: 'multimedia/somango-glue.jpg'
   },
   {
       nombre: 'LOST COAST OG',
-      precio: 13.65,
+      precio: 20.65,
       imagen: 'multimedia/somango-glue.jpg'
   },
   {
       nombre: 'AUTO ZKITTLEZ',
-      precio: 13.65,
+      precio: 21.65,
       imagen: 'multimedia/auto-zkittlez.jpg'
   }
 
 ]
+
 // VARIABLES 
+
+var carrito = localStorage.carrito ? JSON.parse(localStorage.carrito) : [];
+
 let $juanas = document.querySelector('#juanas')
 let $compraDeProductos = document.querySelector('#compras')
-let $sectorModal = document.querySelector('#compras')
-let carrito = []
+let $sectorModal = document.querySelector('#modal')
+
+
 
 
 function renderbaseDeDatos () {
@@ -76,12 +81,12 @@ function renderbaseDeDatos () {
       miNodoTienda.innerHTML = `
               
                   <div class="item shadow mb-4">
-                      <h3 class="item-title text-center pt-3">${producto.nombre}</h3>
-                      <img class="item-image img-fluid p-4" src="${producto.imagen}">
+                      <h3 class="item-titulo text-center pt-3">${producto.nombre}</h3>
+                      <img class="item-imagen img-fluid p-4" src="${producto.imagen}">
                     
                       <div class="item-details text-center">
-                          <h4 class="item-price">$${producto.precio}</h4>
-                          <button class="item-button btn btn-success añadirCarrito">AÑADIR AL CARRITO</button>
+                          <h4 class="item-precio">$${producto.precio}</h4>
+                          <button class="item-boton btn btn-success añadirCarrito">AÑADIR AL CARRITO</button>
                       </div>
                   </div>       
           `
@@ -117,9 +122,9 @@ function sectorCompraDeCepas () {
   miNodoCompra4.innerHTML = `
           <div class="shopping-cart-total d-flex align-items-center">
                 <p class="mb-0">Total</p>
-                <p class="ml-4 mb-0 shoppingCartTotal">0$</p>
+                <p class="ml-4 mb-0 modificacionTotal">0$</p>
                 
-                <button class="ml-auto btn btn-success comprarButton" type="button" data-toggle="modal"
+                <button class="ml-auto btn btn-success botonDeCompra" type="button" data-toggle="modal"
                     data-target="#comprarModal">Comprar</button>
           </div>
   `
@@ -158,24 +163,121 @@ function sectorModal () {
 
 }
 sectorModal()
-// DESDE AQUI SE ACTIVA LA COMPRA 
 
-const addToShoppingCartButtons = document.querySelectorAll('.añadirCarrito');
+const botonAñadirCarritoCompra = document.querySelectorAll('.añadirCarrito'); 
 
-addToShoppingCartButtons.forEach(addToCartButton => {
-     addToCartButton.addEventListener('click', clickAñadirAlCarrito); 
+botonAñadirCarritoCompra.forEach(function (botonAñadirCarrito)  {
+    
+     botonAñadirCarrito.addEventListener('click', clickAñadirAlCarrito); 
+     //botonAñadirCarrito.style.backgroundColor = 'red';
   });
+  const botonDeCompra = document.querySelector('.botonDeCompra');
+  botonDeCompra.addEventListener('click', clickBotonCompra)
+
+  const contenedorArticulosCompra = document.querySelector('.contenidoDeLaCompra')
+// esta variable la colocamos afuera porque la vamos a usar mas veces y la necesitamos como global
 
 function clickAñadirAlCarrito (event) {
-  let button = event.target;
-  let item = button.closest('.item');
+    let button = event.target;
+    let item = button.closest('.item');
   
+    
+    const itemTitulo = item.querySelector('.item-titulo').textContent;
+    const itemPrecio = item.querySelector('.item-precio').textContent;
+    const itemImagen = item.querySelector('.item-imagen').src;
 
-  const itemTitle = item.querySelector('.item-title').textContent;
-  const itemPrice = item.querySelector('.item-price').textContent;
-  const itemImage = item.querySelector('.item-image').src;
+    const objetoPush = [
+        {
+            titulo: itemTitulo,
+            precio: itemPrecio
+        }
+    ]
 
-  alert(itemTitle)
-  alert(itemPrice)
-  alert(itemImage)
+    carrito.push(objetoPush)
+
+    localStorage.carrito = JSON.stringify(carrito)
+    
+
+    addItemToShoppingCart(itemTitulo, itemPrecio, itemImagen)
+}
+
+function addItemToShoppingCart(itemTitulo, itemPrecio, itemImagen) {
+
+    const titulosDelProducto = contenedorArticulosCompra.getElementsByClassName('tituloProductoCarrito')
+    for (let i=0; i<titulosDelProducto.length; i++ ){
+        if(titulosDelProducto[i].innerText === itemTitulo) {
+            let productoCantidad = titulosDelProducto[i].parentElement.parentElement.parentElement.querySelector('.cantidadProductoCarrito')
+            productoCantidad.value++;
+            actualizacionTotal()
+            return;  
+        }
+    
+    }
+    const filaCarritoCompra = document.createElement('div')
+    const filaCarritoCompra1 = `
+    <div class="row productoCarritoTienda">
+        <div class="col-6">
+            <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <img src=${itemImagen} class="shopping-cart-image">
+                <h6 class="shopping-cart-item-title tituloProductoCarrito text-truncate ml-3 mb-0">${itemTitulo}</h6>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <p class="item-price mb-0 precioProductoCarrito">${itemPrecio}</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div
+                class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
+                <input class="shopping-cart-quantity-input cantidadProductoCarrito" type="number"
+                    value="1">
+                <button class="btn btn-danger botonBorrado" type="button">X</button>
+            </div>
+        </div>
+    </div>`
+    filaCarritoCompra.innerHTML = filaCarritoCompra1
+    contenedorArticulosCompra.append(filaCarritoCompra);
+
+    filaCarritoCompra.querySelector('.botonBorrado').addEventListener('click', removerProductoCarrito);
+    filaCarritoCompra.querySelector('.cantidadProductoCarrito').addEventListener('change', CambioDeCantidad)
+
+    actualizacionTotal()
+}
+
+function actualizacionTotal() {
+    let total = 0;
+    const tiendaCarritoTotal = document.querySelector('.modificacionTotal')
+    
+    const productosTiendaCarrito = document.querySelectorAll('.productoCarritoTienda')
+    productosTiendaCarrito.forEach((productoTiendaCarrito) => {
+        const precioProductoCarrito = productoTiendaCarrito.querySelector('.precioProductoCarrito')
+        
+        const precioProductoCarritoTienda = Number(precioProductoCarrito.textContent.replace('$', ''))
+        
+        const cantidadProductoCarrito = productoTiendaCarrito.querySelector('.cantidadProductoCarrito')
+
+        const cantidadProductoCarritoTienda = Number(cantidadProductoCarrito.value)
+        
+        total = total + precioProductoCarritoTienda * cantidadProductoCarritoTienda
+        
+    })
+    tiendaCarritoTotal.innerHTML = `${total.toFixed(2)}$`
+}
+
+function removerProductoCarrito(event) {
+    const botonBorrado = event.target;
+    botonBorrado.closest('.productoCarritoTienda').remove();
+    actualizacionTotal()
+}
+function CambioDeCantidad(event) {
+    const botonCantidad = event.target
+    if (botonCantidad.value <= 0) {
+        botonCantidad.value = 1;
+    }
+    actualizacionTotal()
+}
+function clickBotonCompra() {
+    contenedorArticulosCompra.innerHTML = '';
+    actualizacionTotal ();
 }
