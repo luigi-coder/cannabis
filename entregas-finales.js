@@ -1,5 +1,6 @@
+
 // BASE DE DATOS PARA LA TIENDA 
-let baseDeDatos = [
+ let baseDeDatos = [
   {
       nombre: 'LIMON PURPURA',
       precio: 10.45,
@@ -53,7 +54,7 @@ let baseDeDatos = [
   {
       nombre: 'LOST COAST OG',
       precio: 20.65,
-      imagen: 'multimedia/somango-glue.jpg'
+      imagen: 'multimedia/lost-coast-og.jpg'
   },
   {
       nombre: 'AUTO ZKITTLEZ',
@@ -61,13 +62,12 @@ let baseDeDatos = [
       imagen: 'multimedia/auto-zkittlez.jpg'
   }
 
-]
+] 
+const carrito = localStorage.carrito ? JSON.parse(localStorage.carrito) : [];
 
 // VARIABLES 
-
-var carrito = localStorage.carrito ? JSON.parse(localStorage.carrito) : [];
-
 let $juanas = document.querySelector('#juanas')
+
 let $compraDeProductos = document.querySelector('#compras')
 let $sectorModal = document.querySelector('#modal')
 
@@ -86,7 +86,8 @@ function renderbaseDeDatos () {
                     
                       <div class="item-details text-center">
                           <h4 class="item-precio">$${producto.precio}</h4>
-                          <button class="item-boton btn btn-success añadirCarrito">AÑADIR AL CARRITO</button>
+                          <button class="item-boton btn btn-success añadirCarrito" onclick="agregarAlCarrito(${baseDeDatos.indexOf(producto)})">AÑADIR AL CARRITO</button>
+                          
                       </div>
                   </div>       
           `
@@ -164,17 +165,42 @@ function sectorModal () {
 }
 sectorModal()
 
+function agregarAlCarrito(index) {
+    
+    var producto = baseDeDatos[index];
+    if (carrito.length > 0) {
+        var noExiste = true;
+        for (var i = 0; i < carrito.length; i++) {
+            if (producto.nombre === carrito[i].nombre) {
+            carrito[i].cantidad++;
+            noExiste = false;
+            }
+        }
+        if (noExiste) {
+            producto.cantidad = 1;
+            carrito.push(producto);
+        }
+    } 
+    else {
+        producto.cantidad = 1;
+        carrito.push(producto);
+    }
+    
+    localStorage.carrito = JSON.stringify(carrito);
+}
+
+
 const botonAñadirCarritoCompra = document.querySelectorAll('.añadirCarrito'); 
 
 botonAñadirCarritoCompra.forEach(function (botonAñadirCarrito)  {
     
-     botonAñadirCarrito.addEventListener('click', clickAñadirAlCarrito); 
+     botonAñadirCarrito.addEventListener('click', clickAñadirAlCarrito);  
      //botonAñadirCarrito.style.backgroundColor = 'red';
-  });
+});
   const botonDeCompra = document.querySelector('.botonDeCompra');
   botonDeCompra.addEventListener('click', clickBotonCompra)
 
-  const contenedorArticulosCompra = document.querySelector('.contenidoDeLaCompra')
+  const contenedorArticulosCompra = document.querySelector('.contenidoDeLaCompra') 
 // esta variable la colocamos afuera porque la vamos a usar mas veces y la necesitamos como global
 
 function clickAñadirAlCarrito (event) {
@@ -186,20 +212,9 @@ function clickAñadirAlCarrito (event) {
     const itemPrecio = item.querySelector('.item-precio').textContent;
     const itemImagen = item.querySelector('.item-imagen').src;
 
-    const objetoPush = [
-        {
-            titulo: itemTitulo,
-            precio: itemPrecio
-        }
-    ]
-
-    carrito.push(objetoPush)
-
-    localStorage.carrito = JSON.stringify(carrito)
-    
-
     addItemToShoppingCart(itemTitulo, itemPrecio, itemImagen)
 }
+
 
 function addItemToShoppingCart(itemTitulo, itemPrecio, itemImagen) {
 
@@ -232,7 +247,7 @@ function addItemToShoppingCart(itemTitulo, itemPrecio, itemImagen) {
                 class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
                 <input class="shopping-cart-quantity-input cantidadProductoCarrito" type="number"
                     value="1">
-                <button class="btn btn-danger botonBorrado" type="button">X</button>
+                <button class="btn btn-danger botonBorrado type="button">X</button> 
             </div>
         </div>
     </div>`
@@ -268,6 +283,7 @@ function actualizacionTotal() {
 function removerProductoCarrito(event) {
     const botonBorrado = event.target;
     botonBorrado.closest('.productoCarritoTienda').remove();
+    
     actualizacionTotal()
 }
 function CambioDeCantidad(event) {
@@ -280,4 +296,4 @@ function CambioDeCantidad(event) {
 function clickBotonCompra() {
     contenedorArticulosCompra.innerHTML = '';
     actualizacionTotal ();
-}
+} 
