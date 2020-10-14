@@ -11,12 +11,12 @@
   <body>
     <header>
         <nav id ="maria"class="navbar navbar-expand-lg navbar-dark"><!--fixed-top-->
-            <img src="multimedia/logo.jpg" class="logo-brand"alt=""><a class="juanas">" -Las Juanas- "</a>
+            <img src="multimedia/logo.jpg" class="logo-brand"alt=""><a class="juanas">"-las juanas-"</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse pr-4" id="navbarNav">
-                <ul class="bg-green navbar-nav ml-auto animate__animated animate__bounceInRight bg-black">
+                <ul class="navbar-nav ml-auto animate__animated animate__bounceInRight bg-black">
                     <li class="nav-item px-3">
                       <a class="nav-link text-black"href="#">Home</a>
                     </li>
@@ -31,19 +31,47 @@
             </div>
         </nav>
     </header>
+    <!--SIDEBAR-->
+    
     <div id="sidebar">
-        <div class="palanca-btn">
-            <span><i class="fas fa-shopping-cart text-black carrito"></i></span>
+        <div class="scroll">
+        <div class="palanca-btn ml-5 body1">
+            <span><i class="fas fa-shopping-cart text-black carrito "></i></span>
         </div>
+    
         <ul class="ancho-side">
-            <li>
-                <img src="multimedia/logo.jpg" class="logo-brand logo"alt="logotipo">
-            </li>
-            <li>home</li>
-            <li>about</li>
-            <li>contacto</li>
+            <li><img src="multimedia/logo.jpg" class="logo-brand logo"alt="logotipo"></li>
+            <h3 class="text-center text-light">carrito de compras</h3>
         </ul>
+        <div id="compras" class="m-4 row">
+            
+        </div>
+            <p class="p-2 ml-3 text-light"id="totalFinal">Tota: $<span id="total">0</span></p>
+            <button class="ml-4 btn btn-success comprarButton" type="button" data-toggle="modal" data-target="#comprarModal">Comprar</button>
+            <div class="modal fade" id="comprarModal" tabindex="-1" aria-labelledby="comprarModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="comprarModalLabel">Gracias por su compra</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Pronto recibirá su pedido</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    <!--SLIDER-->
+<div class="animate">
     <div class="slideshow">
         <ul class="slider">
             <li>
@@ -86,72 +114,34 @@
             <span class="fa fa-chevron-right"></span>
         </div>
     </div>
-    <div class="container">
-        <h1 class="text-center">TIENDA - " LAS JUANAS "</h1>
-        <hr>
-    </div>
     <!--SECCION TIENAS LAS JUANAS-->
     <section class="store">
+        <h1 class="text-center">TIENDA - " LAS JUANAS "</h1>
+        <div id="bienvenido"></div>
+        <!--<audio src="micancion.mp3" controls="controls"></audio>-->
+        <hr>
         <div class="container">
             <div class="items">
-                <div class="row" id="juanas">
-
-                </div>
-                <div id="label-modelo">
-
-                </div>
+                <div class="row" id="juanas"></div>
             </div>
         </div>
     </section>
-    <!--SECTION DE COMPRA DE CEPAS-->
+
+    <!--CARRITO-->
     <section class="shopping-cart">
         <div class="container">
-            <h1></h1>
-            <h2>CARRITO DE COMPRAS</h2>
-            <div id="sidebar">
-                <div class="palanca-btn">
-                    <span><i class="fas fa-shopping-cart text-black carrito"></i></span>
-                </div>
-                <ul class="ancho-side">
-                    <li>
-                        <img src="multimedia/logo.jpg" class="logo-brand logo"alt="logotipo">
-                    </li>
-                    <li>home</li>
-                    <li>about</li>
-                    <li>contacto</li>
-                </ul>
+            
+            <div  class="row">
             </div>
-            <hr>
-            <div id="compras" class="row">
-            </div>
-            <div class="row">
+            <!--<div class="row">
                 <p  class="p-4"id="totalFinal">Tota: $<span id="total">0</span></p>
                 <div class = "shopping-cart-total ml-auto">
                     <button class="m-4 btn btn-success comprarButton" type="button" data-toggle="modal" data-target="#comprarModal">Comprar</button>
                 </div>
-            </div>
+            </div>-->
         </div>
-        <div class="modal fade" id="comprarModal" tabindex="-1" aria-labelledby="comprarModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="comprarModalLabel">Gracias por su compra</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Pronto recibirá su pedido</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
     </section>
-    
+    <!--REDES SOCIALES-->
     <div class="text-center mt-5">
         <a class="text-dark" href="https://api.whatsapp.com/send?phone=541130990849&text=Hola!%20necesito%20informacion%20del%20producto%20gracias."target="_blank"><i class="fab fa-whatsapp whats text-decoration"></i></a>
         <a class="text-dark" href="https://twitter.com/?lang=es" target="_blank"><i class="fab fa-twitter-square"></i></a>
@@ -160,17 +150,18 @@
         <a class="text-dark" href="https://www.instagram.com/?hl=es" target="_blank"><i class="fab fa-instagram"></i></a>
         <a class="text-dark" href="https://ar.pinterest.com/" target="_blank"><i class="fab fa-pinterest-square"></i></a>
     </div>
-    
-
+    <!--FOOTER-->
     <footer class="bg-dark p-3 mt-5">
         <div class="text-center">
             <p class="text-light pt-4 mb-0"><i class="fas fa-phone-alt pr-3"></i>Llamanos - 1530990849</p>
             <p class="text-light pt-4 mb-0">Tienda de Cannabis - Las Juanas</p>
         </div>
     </footer>
+</div>
     
-   
-     
+	
+    
+    
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="slider.js"></script>
     <script src="entregas-finales.js"></script>

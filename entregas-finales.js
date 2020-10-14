@@ -1,4 +1,4 @@
-
+// var nombre = prompt("ingrese su nombre, porfavor")
 // BASE DE DATOS PARA LA TIENDA 
  let baseDeDatos = [
   {
@@ -64,63 +64,45 @@
 
 ] 
 
-$('h1').html('<strong>Tienda "Las Juanas"</strong>')
-
+//$('h1').html('<strong>Tienda "Las Juanas"</strong>')
+// sidebar
 const btnToogle = $('.palanca-btn').click(function() {
     $('#sidebar').toggleClass('active')
 })
+// scroll Sidebar
 
 const carrito = localStorage.carrito ? JSON.parse(localStorage.carrito) : [];
 
 // VARIABLES 
 
-
 //let $juanasTienda = document.querySelector('#juanas')
 let $contenedorCarrito = document.querySelector('#compras')
 let $contenedorTotal = document.querySelector('#total')
 
+//let $bienvenido = $('#bienvenido')
+//var miNodoNombre = $(document.createElement('div')).addClass('text-center').html(`<h1>Hola, ${nombre} bienvenido</h1>`)
+//$bienvenido.append(miNodoNombre)
 let $juanasTienda = $('#juanas')
 function renderbaseDeDatos () {
     baseDeDatos.forEach(function(producto){
         var miNodoTienda = $(document.createElement('div'))
         .addClass('col-12').addClass('col-md-4').addClass('sidebar')
         .html(`
+       
         <div class="item shadow mb-4">
             <h3 class="item-titulo text-center pt-3">${producto.nombre}</h3>
             <img class="item-imagen img-fluid p-4" src="${producto.imagen}">
-            
             <div class="item-details text-center">
                 <h4 class="item-precio">$${producto.precio}</h4>
-                <button class="item-boton btn btn-success añadirCarrito" onclick="sumarAlCarrito(${baseDeDatos.indexOf(producto)})">AÑADIR AL CARRITO</button>
+                <button class="item-boton btn btn-success" onclick="sumarAlCarrito(${baseDeDatos.indexOf(producto)})">AÑADIR AL CARRITO</button>
                 
             </div>
+            
         </div>    `)
         $juanasTienda.append(miNodoTienda)
     });
 }
 renderbaseDeDatos()
-/*function renderbaseDeDatos () {
-  baseDeDatos.forEach(function(producto){
-      var miNodoTienda = document.createElement('div')
-      miNodoTienda.classList.add('col-12','col-md-4','sidebar')
-      miNodoTienda.innerHTML = `
-                  <div class="item shadow mb-4">
-                    <h3 class="item-titulo text-center pt-3">${producto.nombre}</h3>
-                    <img class="item-imagen img-fluid p-4" src="${producto.imagen}">
-                    
-                    <div class="item-details text-center">
-                          <h4 class="item-precio">$${producto.precio}</h4>
-                          <button class="item-boton btn btn-success añadirCarrito" onclick="sumarAlCarrito(${baseDeDatos.indexOf(producto)})">AÑADIR AL CARRITO</button>
-                          
-                    </div>
-                  </div>       
-          `
-      $juanasTienda.appendChild(miNodoTienda)
-  })
-}
-renderbaseDeDatos()*/
-
-
 
 function sumarAlCarrito(index) {
     var producto = baseDeDatos[index];
@@ -152,26 +134,28 @@ function renderCarrito(){
     if(carrito.length > 0) {
         carrito.forEach( element => {
             $contenedorCarrito.innerHTML += `
-            
-                <div class="col-6">
-                    <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+
+                <div class="col-4">
+                <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-2 mt-2 mb-0">${element.nombre}</h6>
+                    
+                    <div class="d-flex align-items-center h-100  pb-2 mt-0">
                         <img src=${element.imagen} class="shopping-cart-image">
-                        <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-3 mb-0">${element.nombre}</h6>
+                        <!--<h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-2 mb-0">${element.nombre}</h6>-->
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <div class="col-5">
+                    <div class="shopping-cart-total d-flex align-items-center h-100  pb-2 pt-3">
                         <p class="item-price mb-0 shoppingCartItemPrice">$${element.precio}</p>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="shopping-cart-total d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
+                <div class="col-1">
+                    <div class="shopping-cart-total d-flex justify-content-between align-items-center h-100  pb-2 pt-3">
                         <p class="pt-3">${element.cantidad}</p>
                         
                     </div> 
                 </div>
-                <div class="col-2">
-                    <div class="shopping-cart-total d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
+                <div class="col-1">
+                    <div class="shopping-cart-total d-flex  align-items-center text-center h-100  pb-2 pt-3">
                         <button class="btn btn-danger buttonDelete" onclick="borradoDeProductos(${carrito.indexOf(element)})">X</button>
                     </div>
                 </div>
@@ -204,7 +188,7 @@ function sumadorDePrecios() {
         return
     })
     localStorage.carrito = JSON.stringify(carrito)
-    precioTotal.innerHTML = `total: ${total.toFixed(2)}$`
+    precioTotal.innerHTML = `TOTAL: ${total.toFixed(2)}$`
 }
 
 renderbaseDeDatos ()
