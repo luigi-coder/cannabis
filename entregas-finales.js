@@ -1,6 +1,7 @@
-// var nombre = prompt("ingrese su nombre, porfavor")
 // BASE DE DATOS PARA LA TIENDA 
- let baseDeDatos = [
+
+ let baseDeDatos;
+ /*= [
   {
       nombre: 'LIMON PURPURA',
       precio: 10.45,
@@ -62,27 +63,57 @@
       imagen: 'multimedia/auto-zkittlez.jpg'
   }
 
-] 
+] */
+document.addEventListener('DOMContentLoaded', cargaInicial);
+
+function cargaInicial() {
+	$.ajax({
+		url: 'db.json',
+		success: function (data) {
+			console.log(data)
+			baseDeDatos = data;
+			renderbaseDeDatos();
+			renderCarrito();
+		},
+		error: function (error, jqXHR, status) {
+			console.log(error);
+		}
+	})
+}
 
 //$('h1').html('<strong>Tienda "Las Juanas"</strong>')
-// sidebar
+
+//=================== SIDEBAR ===================//
 const btnToogle = $('.palanca-btn').click(function() {
     $('#sidebar').toggleClass('active')
 })
-// scroll Sidebar
-
+//=================== CARRITO ===================//
 const carrito = localStorage.carrito ? JSON.parse(localStorage.carrito) : [];
 
-// VARIABLES 
-
-//let $juanasTienda = document.querySelector('#juanas')
+//=================== VARIABLES ===================//
+let $juanasTienda = $('#juanas')
 let $contenedorCarrito = document.querySelector('#compras')
 let $contenedorTotal = document.querySelector('#total')
 
-//let $bienvenido = $('#bienvenido')
-//var miNodoNombre = $(document.createElement('div')).addClass('text-center').html(`<h1>Hola, ${nombre} bienvenido</h1>`)
-//$bienvenido.append(miNodoNombre)
-let $juanasTienda = $('#juanas')
+/*function cargarProductos() {
+    $.getJSON("db.json", function (datos) {
+      datos.forEach((productoAjax) => {
+        $('#juanas').addClass('row').addClass('col-12').addClass('col-md-4').addClass('sidebar').append(`
+          <div class="item shadow mb-4">
+              <h3 class="item-titulo text-center pt-3">${productoAjax.nombre}</h3>
+              <img class="item-imagen img-fluid p-4" src="${productoAjax.imagen}">
+              <div class="item-details text-center">
+                  <h4 class="item-precio">$${productoAjax.precio}</h4>
+                  <button class="item-boton btn btn-success" onclick="sumarAlCarrito(${datos.indexOf(
+                    productoAjax)})">AÑADIR AL CARRITO</button>
+              </div>
+          </div> `);
+      });
+      $("#juanas").append(JSON.stringify(datos));
+    });
+  }
+cargarProductos()*/
+
 function renderbaseDeDatos () {
     baseDeDatos.forEach(function(producto){
         var miNodoTienda = $(document.createElement('div'))
@@ -102,7 +133,7 @@ function renderbaseDeDatos () {
         $juanasTienda.append(miNodoTienda)
     });
 }
-renderbaseDeDatos()
+renderbaseDeDatos() 
 
 function sumarAlCarrito(index) {
     var producto = baseDeDatos[index];
@@ -162,24 +193,9 @@ function renderCarrito(){
             `    
         })
     }
+    sumadorDePrecios()
 }
 
-
-function borradoDeProductos(index) {
-    carrito[index].cantidad = carrito[index].cantidad - 1
-    if(carrito[index].cantidad <= 0) {
-        carrito.splice(index, 1)
-    }
-    localStorage.carrito = JSON.stringify(carrito)
-    renderCarrito()
-    restadorDePrecios()
-}
-function restadorDePrecios() {
-    carrito.forEach(dejarDeComprar =>{
-    total = sumadorDePrecios() - dejarDeComprar.precio
-    })
-    localStorage.carrito = JSON.stringify(carrito)
-}
 function sumadorDePrecios() {
     let total = 0
     let precioTotal = document.querySelector('#totalFinal')
@@ -191,8 +207,25 @@ function sumadorDePrecios() {
     precioTotal.innerHTML = `TOTAL: ${total.toFixed(2)}$`
 }
 
-renderbaseDeDatos ()
+function borradoDeProductos(index) {
+    carrito[index].cantidad = carrito[index].cantidad - 1
+    if(carrito[index].cantidad <= 0) {
+        carrito.splice(index, 1)
+    }
+    localStorage.carrito = JSON.stringify(carrito)
+    renderCarrito()
+    restadorDePrecios()
+}
+
+function restadorDePrecios() {
+    carrito.forEach(dejarDeComprar =>{
+    total = sumadorDePrecios() - dejarDeComprar.precio
+    })
+    localStorage.carrito = JSON.stringify(carrito)
+}
+renderbaseDeDatos()
 renderCarrito()
+
 
 
 
