@@ -1,16 +1,16 @@
 [
     {
-        "nombre": "LIMON PURPURA",
+        "nombre": "LEMON PURPLE",
         "precio": 10.45,
         "imagen": "multimedia/purple-lemonade.png"
     },
     {
-        "nombre": "GALLETAS DE GORILA",
+        "nombre": "GORILLA COOKIES",
         "precio": 11.75,
         "imagen": "multimedia/gorila-cookie-auto.jpg"
     },
     {
-        "nombre": "PASTEL DE LIMON",
+        "nombre": "LEMON PIE CBD",
         "precio": 12.85,
         "imagen": "multimedia/lemon-pie-auto.jpg"
     },
@@ -20,12 +20,12 @@
         "imagen": "multimedia/strawberry-pie-auto.jpg"
     },
     {
-        "nombre": "DINAMED KUSH CBD",
+        "nombre": "DINAMED KUSH",
         "precio": 14.65,
         "imagen": "multimedia/dinamed-kush-auto-cbd.jpg"
     },
     {
-        "nombre": "WEDDING CHEESCAKE",
+        "nombre": "CHEES GREEN",
         "precio": 15.65,
         "imagen": "multimedia/wedding-cheescake-auto.jpg"
     },
@@ -35,12 +35,12 @@
         "imagen": "multimedia/orange-sherbet-auto.jpg"
     },
     {
-        "nombre": "FAST GREEN CRACK",
+        "nombre": "FAST GREEN HAZE",
         "precio": 17.65,
         "imagen": "multimedia/fast-green-crack.jpg"
     },
     {
-        "nombre": "CHAMPAGEN",
+        "nombre": "CHAMPAGEN GREENISH",
         "precio": 18.65,
         "imagen": "multimedia/mimosa-champagne.jpg"
     },
